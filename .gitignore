@@ -1,0 +1,30 @@
+# ── Node ──────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Hardhat ───────────────────────
+blockchain/cache/
+blockchain/artifacts/
+
+# ── Frontend Build ────────────────
+frontend/dist/
+frontend/.vite/
+
+# ── Environment ───────────────────
+.env
+.env.local
+.env.*.local
+
+# ── OS ────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Editor ────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
