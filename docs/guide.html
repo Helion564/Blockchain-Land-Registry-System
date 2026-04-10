@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Blockchain Land Registry — Complete Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0e1a; --bg2: #0f1628; --bg3: #141c35; --bg4: #192040;
+    --accent: #5b72ff; --accent2: #7b8fff;
+    --gold: #f5c842; --green: #34d399; --red: #f87171; --purple: #a78bfa;
+    --t1: #e8ecff; --t2: #8892b0; --t3: #4a5568;
+    --bd: rgba(99,120,255,0.18);
+    --r: 10px; --rm: 16px; --rl: 24px;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--t1);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Layout */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(160deg, #0f1628 0%, #0a0e1a 60%);
+    border-bottom: 1px solid var(--bd);
+    padding: 4rem 0 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% -20%, rgba(91,114,255,0.2) 0%, transparent 70%);
+  }
+  .hero-icon {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border-radius: 22px;
+    margin: 0 auto 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    position: relative;
+    box-shadow: 0 0 60px rgba(91,114,255,0.4);
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    position: relative;
+  }
+  .hero .subtitle {
+    color: var(--t2);
+    font-size: 1.05rem;
+    margin-top: 0.75rem;
+    position: relative;
+  }
+  .tech-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+  .pill {
+    background: rgba(91,114,255,0.12);
+    border: 1px solid rgba(91,114,255,0.3);
+    color: var(--accent2);
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: var(--rm);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+  }
+  .toc h2 { font-size: 0.85rem; color: var(--t3); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .toc ol { padding-left: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 2rem; }
+  .toc li { font-size: 0.9rem; }
+  .toc a { color: var(--t2); }
+  .toc a:hover { color: var(--accent2); }
+
+  /* Sections */
+  .section { padding: 3rem 0; border-bottom: 1px solid rgba(99,120,255,0.08); }
+  .section:last-child { border-bottom: none; }
+
+  .phase-header {
+    display: flex; align-items: flex-start; gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .phase-num {
+    min-width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border-radius: var(--r);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .phase-title { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; }
+  .phase-desc { color: var(--t2); margin-top: 4px; font-size: 0.9rem; }
+
+  /* Content blocks */
+  h3 {
+    font-size: 1rem; font-weight: 700;
+    color: var(--t1);
+    margin: 1.75rem 0 0.75rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  h3::before {
+    content: '';
+    display: inline-block;
+    width: 3px; height: 16px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  p { color: var(--t2); margin-bottom: 0.75rem; font-size: 0.93rem; }
+  ul, ol { padding-left: 1.5rem; color: var(--t2); font-size: 0.93rem; }
+  li { margin-bottom: 4px; }
+
+  /* Code blocks */
+  .code-block {
+    background: #060910;
+    border: 1px solid var(--bd);
+    border-radius: var(--r);
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+  .code-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--bd);
+  }
+  .code-lang {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .code-lang.bash    { color: var(--green); }
+  .code-lang.js      { color: #f7df1e; }
+  .code-lang.sol     { color: var(--purple); }
+  .code-lang.json    { color: var(--gold); }
+  .code-lang.txt     { color: var(--t2); }
+  .copy-btn {
+    background: rgba(99,120,255,0.1);
+    border: 1px solid rgba(99,120,255,0.2);
+    color: var(--t2);
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    font-family: var(--mono);
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { background: rgba(99,120,255,0.2); color: var(--accent2); }
+  pre {
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: #cdd6f4;
+  }
+  .kw   { color: #cba6f7; }
+  .str  { color: #a6e3a1; }
+  .num  { color: #fab387; }
+  .cm   { color: #6c7086; font-style: italic; }
+  .fn   { color: #89b4fa; }
+  .op   { color: #89dceb; }
+
+  /* Info boxes */
+  .info-box {
+    border-radius: var(--r);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    border-left: 3px solid;
+  }
+  .info-box.note    { background: rgba(91,114,255,0.08); border-color: var(--accent); color: #a5b4fc; }
+  .info-box.warning { background: rgba(245,200,66,0.08); border-color: var(--gold);   color: #fde68a; }
+  .info-box.success { background: rgba(52,211,153,0.08); border-color: var(--green);  color: #6ee7b7; }
+  .info-box.error   { background: rgba(248,113,113,0.08);border-color: var(--red);    color: #fca5a5; }
+  .info-box strong  { color: inherit; }
+
+  /* Folder tree */
+  .tree {
+    background: #060910;
+    border: 1px solid var(--bd);
+    border-radius: var(--r);
+    padding: 1.25rem 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 2;
+    color: #cdd6f4;
+    overflow-x: auto;
+  }
+  .tree .dir   { color: var(--accent2); font-weight: 700; }
+  .tree .file  { color: var(--t2); }
+  .tree .cmnt  { color: #6c7086; }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    counter-increment: step;
+    display: flex; gap: 1rem;
+    margin-bottom: 1.25rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    min-width: 28px; height: 28px;
+    background: rgba(91,114,255,0.15);
+    border: 1px solid rgba(91,114,255,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--accent2);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 0.5rem; }
+
+  /* Error table */
+  .err-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+  .err-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--bd);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--t3);
+    font-family: var(--mono);
+  }
+  .err-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(99,120,255,0.06);
+    color: var(--t2);
+    vertical-align: top;
+  }
+  .err-table td:first-child { color: var(--red); font-family: var(--mono); font-size: 0.78rem; }
+  .err-table tr:last-child td { border-bottom: none; }
+
+  /* Output box */
+  .output {
+    background: #001a0a;
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: var(--r);
+    padding: 1rem 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--green);
+    margin: 0.75rem 0;
+    line-height: 1.8;
+  }
+  .output .dim { color: #3a6655; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--mono);
+    margin-right: 6px;
+  }
+  .tag-opt  { background: rgba(167,139,250,0.15); color: var(--purple); }
+  .tag-req  { background: rgba(52,211,153,0.12); color: var(--green); }
+
+  /* Final demo */
+  .demo-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .demo-step {
+    background: var(--bg3);
+    border: 1px solid var(--bd);
+    border-radius: var(--rm);
+    padding: 1.25rem;
+  }
+  .demo-num {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: 0.75rem;
+  }
+  .demo-step h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .demo-step p  { font-size: 0.82rem; margin: 0; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bd); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 640px) {
+    .toc ol { grid-template-columns: 1fr; }
+    .container { padding: 0 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-icon">🏛️</div>
+    <h1>Blockchain Land Registry System</h1>
+    <p class="subtitle">Complete Implementation Guide · Ethereum · Hardhat · React · MetaMask</p>
+    <div class="tech-pills">
+      <span class="pill">Solidity 0.8.19</span>
+      <span class="pill">Hardhat</span>
+      <span class="pill">ethers.js v6</span>
+      <span class="pill">React 18</span>
+      <span class="pill">MetaMask</span>
+      <span class="pill">Ganache</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li><a href="#phase1">Phase 1: Project Setup</a></li>
+      <li><a href="#phase2">Phase 2: Smart Contract</a></li>
+      <li><a href="#phase3">Phase 3: Compile &amp; Deploy</a></li>
+      <li><a href="#phase4">Phase 4: MetaMask Setup</a></li>
+      <li><a href="#phase5">Phase 5: React Frontend</a></li>
+      <li><a href="#phase6">Phase 6: Blockchain Integration</a></li>
+      <li><a href="#phase7">Phase 7: Google Maps (Optional)</a></li>
+      <li><a href="#phase8">Phase 8: IPFS (Optional)</a></li>
+      <li><a href="#demo">Final Demo Steps</a></li>
+    </ol>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="section" id="phase1">
+    <div class="phase-header">
+      <div class="phase-num">P1</div>
+      <div>
+        <div class="phase-title">Project Setup</div>
+        <div class="phase-desc">Node.js, Hardhat, Ganache, folder structure</div>
+      </div>
+    </div>
+
+    <h3>Prerequisites — Install these first</h3>
+    <ul>
+      <li><strong>Node.js 18+</strong> — <a href="https://nodejs.org">nodejs.org</a></li>
+      <li><strong>Ganache GUI</strong> — <a href="https://trufflesuite.com/ganache/">trufflesuite.com/ganache</a> (or use <code>npx hardhat node</code> as alternative)</li>
+      <li><strong>MetaMask</strong> — browser extension from <a href="https://metamask.io">metamask.io</a></li>
+      <li><strong>Git</strong> — for version control</li>
+    </ul>
+
+    <h3>Create the Project Structure</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre><span class="cm"># Create root project folder</span>
+mkdir land-registry-blockchain
+cd    land-registry-blockchain
+
+<span class="cm"># Initialize Hardhat project</span>
+npm init -y
+npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox
+npm install dotenv
+
+<span class="cm"># Initialize Hardhat (choose "Create a JavaScript project")</span>
+npx hardhat init
+
+<span class="cm"># Create React frontend</span>
+npx create-react-app frontend
+cd frontend
+npm install ethers react-toastify lucide-react
+cd ..</pre>
+    </div>
+
+    <h3>Folder Structure</h3>
+    <div class="tree">
+<span class="dir">land-registry-blockchain/</span>
+├── <span class="dir">contracts/</span>
+│   └── <span class="file">LandRegistry.sol</span>        <span class="cmnt">← Smart contract</span>
+├── <span class="dir">scripts/</span>
+│   └── <span class="file">deploy.js</span>               <span class="cmnt">← Deployment script</span>
+├── <span class="dir">test/</span>
+│   └── <span class="file">LandRegistry.test.js</span>    <span class="cmnt">← Unit tests</span>
+├── <span class="dir">frontend/</span>                       <span class="cmnt">← React app</span>
+│   ├── <span class="dir">public/</span>
+│   │   └── <span class="file">index.html</span>
+│   └── <span class="dir">src/</span>
+│       ├── <span class="file">App.js</span>               <span class="cmnt">← Main UI</span>
+│       ├── <span class="file">App.css</span>             <span class="cmnt">← Styles</span>
+│       ├── <span class="dir">hooks/</span>
+│       │   └── <span class="file">useBlockchain.js</span> <span class="cmnt">← ethers.js logic</span>
+│       └── <span class="dir">contracts/</span>
+│           └── <span class="file">LandRegistry.json</span><span class="cmnt">← ABI (auto-generated)</span>
+├── <span class="file">hardhat.config.js</span>
+├── <span class="file">package.json</span>
+├── <span class="file">deployment.json</span>             <span class="cmnt">← Auto-generated after deploy</span>
+└── <span class="file">.env</span>                         <span class="cmnt">← Secret keys (never commit!)</span>
+    </div>
+
+    <h3>Configure Ganache</h3>
+    <p>Open Ganache GUI and create a new workspace:</p>
+    <ul>
+      <li>Network Name: <code>Land Registry Dev</code></li>
+      <li>RPC Server: <code>HTTP://127.0.0.1:7545</code></li>
+      <li>Chain ID: <code>1337</code></li>
+      <li>You'll get 10 accounts each with 100 test ETH</li>
+    </ul>
+    <div class="info-box note">
+      <strong>Alternative:</strong> Use <code>npx hardhat node</code> instead of Ganache GUI. It runs on port 8545 with chain ID 31337. Update <code>hardhat.config.js</code> accordingly.
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="section" id="phase2">
+    <div class="phase-header">
+      <div class="phase-num">P2</div>
+      <div>
+        <div class="phase-title">Smart Contract Development</div>
+        <div class="phase-desc">Full Solidity contract with structs, mappings, access control, events</div>
+      </div>
+    </div>
+
+    <p>Create <code>contracts/LandRegistry.sol</code>. Key design decisions:</p>
+
+    <h3>Contract Architecture</h3>
+    <ul>
+      <li><strong>Land struct</strong> — stores all land data on-chain</li>
+      <li><strong>TransferHistory struct</strong> — immutable audit trail for every ownership change</li>
+      <li><strong>Mappings</strong> — O(1) lookups by landId and wallet address</li>
+      <li><strong>onlyAdmin modifier</strong> — access control for write operations</li>
+      <li><strong>Events</strong> — emitted on every state change for frontend listening and indexing</li>
+      <li><strong>Pagination</strong> — <code>getAllLandIds(start, count)</code> prevents gas-limit hits on large datasets</li>
+    </ul>
+
+    <div class="info-box note">
+      The full contract code is in <code>contracts/LandRegistry.sol</code> (included in this project). Below is the structural overview:
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang sol">solidity</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre><span class="cm">// SPDX-License-Identifier: MIT</span>
+<span class="kw">pragma solidity</span> ^<span class="num">0.8.19</span>;
+
+<span class="kw">contract</span> <span class="fn">LandRegistry</span> {
+
+  <span class="cm">// ── Structs ───────────────────────────────────────────</span>
+  <span class="kw">struct</span> Land {
+    <span class="kw">uint256</span> landId;
+    <span class="kw">string</span>  ownerName;
+    <span class="kw">address</span> ownerWallet;
+    <span class="kw">string</span>  location;    <span class="cm">// GPS or text</span>
+    <span class="kw">string</span>  landType;    <span class="cm">// Residential/Agricultural/etc</span>
+    <span class="kw">uint256</span> price;       <span class="cm">// in Wei</span>
+    <span class="kw">uint256</span> timestamp;
+    <span class="kw">bool</span>    exists;
+  }
+
+  <span class="kw">struct</span> TransferHistory {
+    <span class="kw">address</span> fromWallet; <span class="kw">string</span> fromName;
+    <span class="kw">address</span> toWallet;   <span class="kw">string</span> toName;
+    <span class="kw">uint256</span> timestamp;  <span class="kw">string</span> reason;
+  }
+
+  <span class="cm">// ── State Variables ───────────────────────────────────</span>
+  <span class="kw">address public</span> admin;
+  <span class="kw">uint256 public</span> landCount;
+  <span class="kw">mapping</span>(<span class="kw">uint256</span> => Land) <span class="kw">private</span> lands;
+  <span class="kw">mapping</span>(<span class="kw">uint256</span> => TransferHistory[]) <span class="kw">private</span> transferHistories;
+  <span class="kw">mapping</span>(<span class="kw">address</span> => <span class="kw">uint256</span>[]) <span class="kw">private</span> ownerLands;
+
+  <span class="cm">// ── Modifier ──────────────────────────────────────────</span>
+  <span class="kw">modifier</span> <span class="fn">onlyAdmin</span>() {
+    <span class="kw">require</span>(msg.sender == admin, <span class="str">"Not admin"</span>);
+    _;
+  }
+
+  <span class="cm">// ── Events ────────────────────────────────────────────</span>
+  <span class="kw">event</span> <span class="fn">LandAdded</span>(<span class="kw">uint256 indexed</span> landId, ...);
+  <span class="kw">event</span> <span class="fn">OwnershipTransferred</span>(<span class="kw">uint256 indexed</span> landId, ...);
+  <span class="kw">event</span> <span class="fn">LandUpdated</span>(<span class="kw">uint256 indexed</span> landId, ...);
+
+  <span class="cm">// ── Admin Functions ───────────────────────────────────</span>
+  <span class="kw">function</span> <span class="fn">addLand</span>(...) <span class="kw">external onlyAdmin returns</span> (<span class="kw">uint256</span>) { ... }
+  <span class="kw">function</span> <span class="fn">transferOwnership</span>(...) <span class="kw">external onlyAdmin</span> { ... }
+  <span class="kw">function</span> <span class="fn">updateLandPrice</span>(...) <span class="kw">external onlyAdmin</span> { ... }
+
+  <span class="cm">// ── View Functions (public) ───────────────────────────</span>
+  <span class="kw">function</span> <span class="fn">getLand</span>(<span class="kw">uint256</span> _landId) <span class="kw">external view returns</span> (...) { ... }
+  <span class="kw">function</span> <span class="fn">getAllLandIds</span>(<span class="kw">uint256</span> _start, <span class="kw">uint256</span> _count) <span class="kw">external view</span> { ... }
+  <span class="kw">function</span> <span class="fn">getTransferHistory</span>(<span class="kw">uint256</span> _landId) <span class="kw">external view</span> { ... }
+}</pre>
+    </div>
+
+    <h3>Gas Efficiency Notes</h3>
+    <ul>
+      <li>Use <code>private</code> on state variables (saves gas vs <code>public</code>)</li>
+      <li>Paginated reads via <code>getAllLandIds(start, count)</code> — never fetch unbounded arrays</li>
+      <li>Use <code>calldata</code> for string parameters in <code>external</code> functions (cheaper than <code>memory</code>)</li>
+      <li>Optimizer enabled in hardhat.config with <code>runs: 200</code></li>
+      <li>Only emit events for state changes, not reads</li>
+    </ul>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="section" id="phase3">
+    <div class="phase-header">
+      <div class="phase-num">P3</div>
+      <div>
+        <div class="phase-title">Compile &amp; Deploy</div>
+        <div class="phase-desc">Step-by-step commands with expected output</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <p><strong>Compile the contract</strong></p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre>npx hardhat compile</pre>
+          </div>
+          <div class="output">
+Compiling 1 file with Solc 0.8.19
+<span class="dim">Solc version: 0.8.19</span>
+Compilation finished successfully
+          </div>
+          <p>This creates <code>artifacts/contracts/LandRegistry.sol/LandRegistry.json</code> with the ABI.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <p><strong>Run tests</strong></p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre>npx hardhat test</pre>
+          </div>
+          <div class="output">
+  LandRegistry
+    Deployment
+      ✔ Should set the correct admin
+      ✔ Should start with 0 land count
+    Add Land (Admin only)
+      ✔ Admin can add a land record
+      ✔ Non-admin cannot add a land record
+    Transfer Ownership (Admin only)
+      ✔ Admin can transfer ownership
+      ✔ Transfer history should be recorded
+    ...
+  14 passing (2s)
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <p><strong>Start Ganache GUI</strong> — Open Ganache, click "Quickstart Ethereum" or your saved workspace.</p>
+          <div class="info-box warning">
+            Make sure Ganache is running <em>before</em> deploying. The RPC should show <strong>HTTP://127.0.0.1:7545</strong>.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <p><strong>Deploy to Ganache</strong></p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre><span class="cm"># Using Ganache GUI (port 7545)</span>
+npx hardhat run scripts/deploy.js --network ganache
+
+<span class="cm"># OR using Hardhat's built-in node (port 8545)</span>
+npx hardhat node   <span class="cm"># terminal 1</span>
+npx hardhat run scripts/deploy.js --network localhost  <span class="cm"># terminal 2</span></pre>
+          </div>
+          <div class="output">
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🏛️  Deploying Land Registry Smart Contract
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 Deploying with account: 0xf39Fd6e51...
+💰 Account balance: 100.0 ETH
+
+⏳ Deploying LandRegistry contract...
+
+✅ LandRegistry deployed to: 0x5FbDB2315678...
+👑 Admin set to: 0xf39Fd6e51aad...
+📄 Deployment info saved to deployment.json
+📁 ABI + address copied to frontend/src/contracts/LandRegistry.json
+🔍 Verification - Admin on chain: 0xf39Fd6e51...
+✅ Contract verified successfully!
+          </div>
+          <div class="info-box success">
+            <strong>Copy the contract address!</strong> You'll need it in Phase 4. The deploy script auto-copies it to the frontend.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Common Errors &amp; Fixes</h3>
+    <table class="err-table">
+      <thead><tr><th>Error</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>HH108: Network not defined</td><td>Check <code>hardhat.config.js</code> — ensure <code>ganache</code> network block exists with correct URL</td></tr>
+        <tr><td>ECONNREFUSED 7545</td><td>Ganache is not running. Start Ganache GUI first</td></tr>
+        <tr><td>Invalid chainId</td><td>Ganache chain ID must be 1337. Check Ganache settings → Server</td></tr>
+        <tr><td>Insufficient funds</td><td>Use the first Ganache account — it has 100 ETH</td></tr>
+        <tr><td>CompilationError</td><td>Verify Solidity version in <code>hardhat.config.js</code> matches the pragma in the contract</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="section" id="phase4">
+    <div class="phase-header">
+      <div class="phase-num">P4</div>
+      <div>
+        <div class="phase-title">Connect MetaMask</div>
+        <div class="phase-desc">Add Ganache network, import accounts, test transactions</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <p><strong>Add Ganache network to MetaMask</strong></p>
+          <ul>
+            <li>Click MetaMask → Networks dropdown → "Add network manually"</li>
+            <li>Network name: <code>Ganache Local</code></li>
+            <li>RPC URL: <code>http://127.0.0.1:7545</code></li>
+            <li>Chain ID: <code>1337</code></li>
+            <li>Currency symbol: <code>ETH</code></li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <p><strong>Import Ganache accounts into MetaMask</strong></p>
+          <ul>
+            <li>In Ganache GUI, click the key icon 🔑 next to any account</li>
+            <li>Copy the private key</li>
+            <li>In MetaMask → Account menu → Import account → paste private key</li>
+            <li>Import Account 1 as <strong>Admin</strong> (deployer)</li>
+            <li>Import Account 2+ as regular <strong>Users</strong></li>
+          </ul>
+          <div class="info-box warning">
+            <strong>Never use Ganache private keys on mainnet!</strong> These are test-only accounts visible to anyone.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <p><strong>Verify connection in browser console</strong></p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang js">javascript</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre><span class="cm">// In browser DevTools → Console:</span>
+<span class="kw">const</span> accounts = <span class="kw">await</span> window.ethereum.request({
+  method: <span class="str">'eth_accounts'</span>
+});
+console.log(<span class="str">'Connected:'</span>, accounts);</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="section" id="phase5">
+    <div class="phase-header">
+      <div class="phase-num">P5</div>
+      <div>
+        <div class="phase-title">React Frontend</div>
+        <div class="phase-desc">Full working UI with all components</div>
+      </div>
+    </div>
+
+    <p>The frontend uses React 18 + ethers.js v6. All files are included in the project. Key file structure:</p>
+
+    <h3>Files Created</h3>
+    <ul>
+      <li><code>frontend/src/App.js</code> — Main app with all page components (Dashboard, AddLand, Transfer, Search, History)</li>
+      <li><code>frontend/src/App.css</code> — Complete styling (deep navy blockchain theme)</li>
+      <li><code>frontend/src/hooks/useBlockchain.js</code> — All ethers.js interactions</li>
+      <li><code>frontend/src/contracts/LandRegistry.json</code> — ABI + address (auto-filled by deploy script)</li>
+    </ul>
+
+    <h3>Start the Frontend</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre>cd frontend
+npm install    <span class="cm"># first time only</span>
+npm start      <span class="cm"># opens http://localhost:3000</span></pre>
+    </div>
+
+    <h3>Pages / Features</h3>
+    <ul>
+      <li><strong>Dashboard</strong> — Stats grid + recent lands + your owned lands</li>
+      <li><strong>All Lands</strong> — Sortable/filterable table of every registered land</li>
+      <li><strong>Search</strong> — Find by Land ID or wallet address</li>
+      <li><strong>Add Land</strong> — Admin-only form to register new land</li>
+      <li><strong>Transfer</strong> — Admin-only ownership transfer with preview</li>
+      <li><strong>History</strong> — Timeline view of all transfers for a land ID</li>
+    </ul>
+  </div>
+
+  <!-- PHASE 6 -->
+  <div class="section" id="phase6">
+    <div class="phase-header">
+      <div class="phase-num">P6</div>
+      <div>
+        <div class="phase-title">Blockchain Integration</div>
+        <div class="phase-desc">How ethers.js connects frontend to smart contract</div>
+      </div>
+    </div>
+
+    <h3>The useBlockchain Hook</h3>
+    <p>All blockchain interactions are centralized in <code>hooks/useBlockchain.js</code>. The pattern:</p>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang js">javascript</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre><span class="cm">// 1. Connect MetaMask → get provider + signer</span>
+<span class="kw">const</span> ethProvider = <span class="kw">new</span> <span class="fn">ethers.BrowserProvider</span>(window.ethereum);
+<span class="kw">const</span> ethSigner   = <span class="kw">await</span> ethProvider.<span class="fn">getSigner</span>();
+
+<span class="cm">// 2. Instantiate contract</span>
+<span class="kw">const</span> contract = <span class="kw">new</span> <span class="fn">ethers.Contract</span>(
+  CONTRACT_ADDRESS,   <span class="cm">// from LandRegistry.json</span>
+  CONTRACT_ABI,       <span class="cm">// from LandRegistry.json</span>
+  ethSigner           <span class="cm">// enables write operations</span>
+);
+
+<span class="cm">// 3. READ — no MetaMask popup (free)</span>
+<span class="kw">const</span> land = <span class="kw">await</span> contract.<span class="fn">getLand</span>(<span class="num">1</span>);
+
+<span class="cm">// 4. WRITE — triggers MetaMask confirmation</span>
+<span class="kw">const</span> tx      = <span class="kw">await</span> contract.<span class="fn">addLand</span>(...args);
+<span class="kw">const</span> receipt = <span class="kw">await</span> tx.<span class="fn">wait</span>(); <span class="cm">// wait for mining</span>
+
+<span class="cm">// 5. Parse price from/to ETH ↔ Wei</span>
+<span class="kw">const</span> priceWei = ethers.<span class="fn">parseEther</span>(<span class="str">"10.5"</span>);   <span class="cm">// ETH → Wei</span>
+<span class="kw">const</span> priceEth = ethers.<span class="fn">formatEther</span>(priceWei); <span class="cm">// Wei → ETH</span></pre>
+    </div>
+
+    <h3>Transaction Flow</h3>
+    <ol>
+      <li>User fills form and clicks submit</li>
+      <li><code>useBlockchain</code> calls the contract write function</li>
+      <li>MetaMask popup appears — user confirms &amp; pays gas</li>
+      <li><code>tx.wait()</code> waits for Ganache to mine the block (~1s)</li>
+      <li>Receipt returned → toast notification shown</li>
+      <li><code>refreshLands()</code> re-reads all land data</li>
+    </ol>
+
+    <h3>Event Listening (Optional Enhancement)</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang js">javascript</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre><span class="cm">// Listen for LandAdded events in real-time</span>
+contract.<span class="fn">on</span>(<span class="str">"LandAdded"</span>, (landId, ownerName, ownerWallet) => {
+  console.<span class="fn">log</span>(<span class="str">`New land #${landId} added for ${ownerName}`</span>);
+  <span class="fn">refreshLands</span>(); <span class="cm">// auto-refresh UI</span>
+});
+
+<span class="cm">// Cleanup on unmount</span>
+<span class="kw">return</span> () => contract.<span class="fn">removeAllListeners</span>();</pre>
+    </div>
+  </div>
+
+  <!-- PHASE 7 -->
+  <div class="section" id="phase7">
+    <div class="phase-header">
+      <div class="phase-num">P7</div>
+      <div>
+        <div class="phase-title">Google Maps Integration <span class="tag tag-opt">Optional</span></div>
+        <div class="phase-desc">Visualize land locations on an interactive map</div>
+      </div>
+    </div>
+
+    <h3>Setup</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre>cd frontend
+npm install @react-google-maps/api</pre>
+    </div>
+    <p>Get a Google Maps API key from <a href="https://console.cloud.google.com">console.cloud.google.com</a> → Enable "Maps JavaScript API".</p>
+
+    <h3>Map Component</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang js">javascript</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre><span class="kw">import</span> { GoogleMap, Marker, InfoWindow, useLoadScript } <span class="kw">from</span> <span class="str">'@react-google-maps/api'</span>;
+
+<span class="kw">function</span> <span class="fn">LandMap</span>({ lands }) {
+  <span class="kw">const</span> { isLoaded } = <span class="fn">useLoadScript</span>({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
+  });
+
+  <span class="kw">const</span> center = { lat: <span class="num">20.5937</span>, lng: <span class="num">78.9629</span> }; <span class="cm">// India center</span>
+
+  <span class="kw">if</span> (!isLoaded) <span class="kw">return</span> &lt;div&gt;Loading map...&lt;/div&gt;;
+
+  <span class="kw">return</span> (
+    &lt;GoogleMap zoom={<span class="num">5</span>} center={center} mapContainerStyle={{width:<span class="str">'100%'</span>, height:<span class="str">'500px'</span>}}&gt;
+      {lands.<span class="fn">map</span>(land => {
+        <span class="cm">// Parse "28.6139°N, 77.2090°E" to {lat, lng}</span>
+        <span class="kw">const</span> coords = <span class="fn">parseCoords</span>(land.location);
+        <span class="kw">if</span> (!coords) <span class="kw">return null</span>;
+        <span class="kw">return</span> (
+          &lt;Marker key={land.landId} position={coords}
+            title={`#${land.landId}: ${land.ownerName}`} /&gt;
+        );
+      })}
+    &lt;/GoogleMap&gt;
+  );
+}
+
+<span class="kw">function</span> <span class="fn">parseCoords</span>(location) {
+  <span class="cm">// Regex: extract lat/lng from "28.6139°N, 77.2090°E"</span>
+  <span class="kw">const</span> m = location.<span class="fn">match</span>(/(\d+\.\d+)°([NS]),?\s*(\d+\.\d+)°([EW])/);
+  <span class="kw">if</span> (!m) <span class="kw">return null</span>;
+  <span class="kw">return</span> {
+    lat: m[<span class="num">2</span>] === <span class="str">'N'</span> ? +m[<span class="num">1</span>] : -m[<span class="num">1</span>],
+    lng: m[<span class="num">4</span>] === <span class="str">'E'</span> ? +m[<span class="num">3</span>] : -m[<span class="num">3</span>],
+  };
+}</pre>
+    </div>
+
+    <div class="info-box note">
+      Store your Maps API key in <code>frontend/.env</code> as <code>REACT_APP_GOOGLE_MAPS_KEY=your_key_here</code>. Never commit this file.
+    </div>
+  </div>
+
+  <!-- PHASE 8 -->
+  <div class="section" id="phase8">
+    <div class="phase-header">
+      <div class="phase-num">P8</div>
+      <div>
+        <div class="phase-title">IPFS Document Storage <span class="tag tag-opt">Optional</span></div>
+        <div class="phase-desc">Store land deed PDFs on IPFS, save the CID on-chain</div>
+      </div>
+    </div>
+
+    <h3>Why IPFS?</h3>
+    <p>Storing files directly on Ethereum is expensive. IPFS stores the file, and the blockchain stores the unique content hash (CID) — giving you immutable, decentralized file references cheaply.</p>
+
+    <h3>Setup with Pinata (Recommended)</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre>cd frontend
+npm install @pinata/sdk axios</pre>
+    </div>
+
+    <h3>Upload &amp; Store Pattern</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang js">javascript</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre><span class="cm">// 1. Upload file to IPFS via Pinata API</span>
+<span class="kw">async function</span> <span class="fn">uploadToIPFS</span>(file) {
+  <span class="kw">const</span> formData = <span class="kw">new</span> <span class="fn">FormData</span>();
+  formData.<span class="fn">append</span>(<span class="str">'file'</span>, file);
+
+  <span class="kw">const</span> res = <span class="kw">await</span> axios.<span class="fn">post</span>(
+    <span class="str">'https://api.pinata.cloud/pinning/pinFileToIPFS'</span>,
+    formData,
+    { headers: {
+        <span class="str">'pinata_api_key'</span>:    process.env.REACT_APP_PINATA_KEY,
+        <span class="str">'pinata_secret_api_key'</span>: process.env.REACT_APP_PINATA_SECRET,
+    }}
+  );
+  <span class="kw">return</span> res.data.IpfsHash; <span class="cm">// CID e.g. "QmXyz..."</span>
+}
+
+<span class="cm">// 2. Add ipfsHash field to the Land struct in Solidity</span>
+<span class="kw">struct</span> Land {
+  ...existing fields...
+  <span class="kw">string</span> ipfsHash; <span class="cm">// ← add this</span>
+}
+
+<span class="cm">// 3. Retrieve and display the document</span>
+<span class="kw">const</span> ipfsUrl = `https://gateway.pinata.cloud/ipfs/${land.ipfsHash}`;
+<span class="cm">// Render as &lt;a href={ipfsUrl}&gt;View Deed&lt;/a&gt;</span></pre>
+    </div>
+
+    <div class="info-box note">
+      Register for a free Pinata account at <a href="https://pinata.cloud">pinata.cloud</a> — free tier gives 1GB storage.
+    </div>
+  </div>
+
+  <!-- FINAL DEMO -->
+  <div class="section" id="demo">
+    <div class="phase-header">
+      <div class="phase-num">✓</div>
+      <div>
+        <div class="phase-title">Final Demo Steps</div>
+        <div class="phase-desc">Run the complete project end-to-end</div>
+      </div>
+    </div>
+
+    <div class="demo-steps">
+      <div class="demo-step">
+        <div class="demo-num">1</div>
+        <h4>Start Ganache</h4>
+        <p>Open Ganache GUI → Start workspace (port 7545, chain 1337)</p>
+      </div>
+      <div class="demo-step">
+        <div class="demo-num">2</div>
+        <h4>Deploy Contract</h4>
+        <p><code>npx hardhat run scripts/deploy.js --network ganache</code></p>
+      </div>
+      <div class="demo-step">
+        <div class="demo-num">3</div>
+        <h4>Start Frontend</h4>
+        <p><code>cd frontend &amp;&amp; npm start</code> → opens localhost:3000</p>
+      </div>
+      <div class="demo-step">
+        <div class="demo-num">4</div>
+        <h4>Connect MetaMask</h4>
+        <p>Click "Connect MetaMask" → switch to Ganache network → approve</p>
+      </div>
+      <div class="demo-step">
+        <div class="demo-num">5</div>
+        <h4>Add a Land Record</h4>
+        <p>Sidebar → Add Land → fill form → MetaMask confirms → ✅</p>
+      </div>
+      <div class="demo-step">
+        <div class="demo-num">6</div>
+        <h4>View All Lands</h4>
+        <p>Sidebar → All Lands → see the on-chain record in the table</p>
+      </div>
+      <div class="demo-step">
+        <div class="demo-num">7</div>
+        <h4>Transfer Ownership</h4>
+        <p>Sidebar → Transfer → enter Land ID + new owner → confirm</p>
+      </div>
+      <div class="demo-step">
+        <div class="demo-num">8</div>
+        <h4>View History</h4>
+        <p>Sidebar → History → enter Land ID → see full transfer timeline</p>
+      </div>
+    </div>
+
+    <div class="info-box success" style="margin-top: 1.5rem;">
+      <strong>🎉 Project Complete!</strong> Every transaction is immutable on your local Ethereum blockchain. You can verify each one in Ganache GUI's Transactions tab.
+    </div>
+
+    <h3>Quick Command Reference</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang bash">bash</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+      <pre><span class="cm"># Install everything</span>
+npm install && cd frontend && npm install && cd ..
+
+<span class="cm"># Compile contract</span>
+npx hardhat compile
+
+<span class="cm"># Run all tests</span>
+npx hardhat test
+
+<span class="cm"># Deploy to Ganache</span>
+npx hardhat run scripts/deploy.js --network ganache
+
+<span class="cm"># Start React app</span>
+cd frontend && npm start
+
+<span class="cm"># Clean build artifacts</span>
+npx hardhat clean</pre>
+    </div>
+  </div>
+
+  <div style="padding: 2rem 0; text-align: center; color: var(--t3); font-size: 0.82rem; font-family: var(--mono);">
+    Blockchain Land Registry System · Built with Ethereum · Hardhat · React · ethers.js
+  </div>
+
+</div>
+
+<script>
+function copy(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1500);
+  });
+}
+</script>
+</body>
+</html>
